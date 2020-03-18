@@ -40,6 +40,13 @@
                     </v-dialog>
                     <br />
                   </v-row>
+                  <v-text-field
+                    v-model="search"
+                    append-icon="mdi-magnify"
+                    label="Search"
+                    single-line
+                    hide-details
+                  ></v-text-field>
 
                   <v-data-table
                     :headers="Eheaders"
@@ -47,10 +54,11 @@
                     :items-per-page="5"
                     class="elevation-1"
                     item-key="id"
+                    :search="search"
                   >
                     <template v-slot:item.actions="{item}">
                       <v-btn
-                        v-on:click="navigateTo('/area/'+item.id+'/village')"
+                        v-on:click="navigateTo('/elder/'+item.id)"
                         color="green"
                         class="white--text"
                       >เพิ่มเติม</v-btn>
@@ -111,7 +119,7 @@
                   >
                     <template v-slot:item.actions="{item}">
                       <v-btn
-                        v-on:click="navigateTo('/area/'+item.id+'/village')"
+                        v-on:click="navigateTo('/volunteer/'+item.id)"
                         color="green"
                         class="white--text"
                       >เพิ่มเติม</v-btn>
@@ -123,15 +131,57 @@
             <v-tab-item>
               <v-card>
                 <v-card-text>
-                  <p>กลุ่มผู้สูงอายุ : {{elderGroup.length}} กลุ่ม</p>
+                  <v-container>
+                    <v-row>
+                    <p>กลุ่มผู้สูงอายุ : {{elderGroup.length}} กลุ่ม</p>
+                    <v-spacer></v-spacer>
+                    <v-btn class="mx-2" fab dark color="primary" @click.stop="groupElder = true">
+                      <v-icon dark>mdi-plus</v-icon>
+                    </v-btn>
+                  </v-row>
+                  </v-container>
                 </v-card-text>
+                <v-dialog v-model="groupElder" max-width="500">
+                  <v-card>
+                    <v-card-title>ยืนยันที่จะเพิ่มกลุ่มผู้สูงอายุ</v-card-title>
+                    <v-container>
+                      <form v-on:submit.prevent="CreateGroupElder">
+                        <center>
+                            <v-btn color="success" class="mr-4" type="submit">ยืนยัน</v-btn>
+                          </center>
+                      </form>
+                    </v-container>
+                  </v-card>
+                </v-dialog>
               </v-card>
             </v-tab-item>
             <v-tab-item>
               <v-card>
                 <v-card-text>
-                  <p>กลุ่มอสม</p>
+                  <v-container>
+                    <v-row>
+                      <p>กลุ่มอาสาสมัคร : {{volunteerGroup.length}} กลุ่ม</p>
+                      <v-spacer></v-spacer>
+                      <v-btn class="mx-2" fab dark color="primary" @click.stop="groupVolunteer = true">
+                      <v-icon dark>mdi-plus</v-icon>
+                    </v-btn>
+                    </v-row>
+                  </v-container>
                 </v-card-text>
+                <v-dialog v-model="groupVolunteer" max-width="500">
+                  <v-card>
+                    <v-card-title>ยืนยันที่จะเพิ่มกลุ่มอาสาสมัคร</v-card-title>
+                    <v-container>
+                      <form v-on:submit.prevent="CreateGroupVolunteer">
+                        <center>
+                          <v-btn color="success" class="mr-4" type="submit">
+                            ยืนยัน
+                          </v-btn>
+                        </center>
+                      </form>
+                    </v-container>
+                  </v-card>
+                </v-dialog>
               </v-card>
             </v-tab-item>
           </v-tabs>
@@ -145,11 +195,16 @@
 import AreaService from "../services/AreaService";
 import ElderService from "../services/ElderService";
 import VolunteerService from "../services/VolunteerService";
+import GroupService from "../services/Group";
 
 export default {
   data() {
     return {
-        elderGroup: [],
+      groupVolunteer: false,
+      groupElder: false,
+      search: "",
+      elderGroup: [],
+      volunteerGroup: [],
       volunteerDialog: false,
       elderDialog: false,
       createVolunteer: {
@@ -206,9 +261,12 @@ export default {
     try {
       let areaId = this.$route.params.areaId;
       let villId = this.$route.params.villId;
-      this.volunteers = (await AreaService.ShowVolunteerinVillage(areaId, villId)).data;
+      this.volunteers = (
+        await AreaService.ShowVolunteerinVillage(areaId, villId)
+      ).data;
       this.elders = (await AreaService.ShowElderinVillage(areaId, villId)).data;
       this.elderGroup = (await ElderService.ShowGroupElder()).data;
+      this.volunteerGroup = (await VolunteerService.ShowVolunteerGroup()).data
     } catch (err) {
       console.log(err);
     }
@@ -227,13 +285,29 @@ export default {
       }
     },
     async CreateVolunteer() {
-        try {
-            await VolunteerService.CreateVolunteer(this.createVolunteer);
-            console.log(this.createVolunteer)
-            window.location.reload();
-        } catch (err) {
-            console.log(err)
-        }
+      try {
+        await VolunteerService.CreateVolunteer(this.createVolunteer);
+        console.log(this.createVolunteer);
+        window.location.reload();
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async CreateGroupElder() {
+      try {
+        await GroupService.CreateGroupElder();
+        window.location.reload();
+      } catch (err) {
+        console.log(err)
+      }
+    },
+    async CreateGroupVolunteer() {
+      try {
+        await GroupService.CreateGroupVolunteer();
+        window.location.reload();
+      } catch (err) {
+        console.log(err)
+      }
     }
   }
 };

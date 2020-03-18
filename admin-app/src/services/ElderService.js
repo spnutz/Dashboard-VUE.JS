@@ -16,10 +16,19 @@ export default {
     ShowAllElder (){
         return Api().get('elder')
     },
+    ShowElderById (elderId){
+        return Api().get('elder/'+elderId)
+    },
     CreateGroupElder() {
         return Api().post('eldergroup')
     },
     ShowGroupElder() {
         return Api().get('eldergroup')
+    },
+    AddElderGroup(elderId, data) {
+        return Api().put('elder/'+elderId+'/addgroup',
+        qs.stringify({
+            eldergroubId: data.eldergroubId
+        }))
     }
 }

@@ -7,10 +7,18 @@ import Volunteers from '../views/Volunteers.vue'
 import Village from '../views/Village.vue'
 import MemberVillage from '../views/MemberVillage.vue'
 import ElderDetail from '../views/ElderDetail.vue'
+import VolunteerDetail from '../views/VolunteerDetail.vue'
+import About from '../views/about.vue'
+import Login from '../views/Login.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
+  {
+    path: '/login',
+    name: 'login',
+    component: Login
+  },
   {
     path: '/',
     name: 'dashboard',
@@ -37,7 +45,7 @@ const routes = [
     component: Elders
   },
   {
-    path: '/elder/:id',
+    path: '/elder/:elderId',
     name: 'elder-detail',
     component: ElderDetail
   },
@@ -45,6 +53,16 @@ const routes = [
     path: '/volunteers',
     name: 'volunteers',
     component: Volunteers
+  },
+  {
+    path: '/volunteer/:volunteerId',
+    name: 'volunteer-detail',
+    component: VolunteerDetail
+  },
+  {
+    path: '/about',
+    name: 'about',
+    component: About
   }
  
 ]

@@ -15,5 +15,17 @@ export default {
             tel: data.tel,
             villageId: data.villageId
         }))
+    },
+    ShowVolunteerById(id) {
+        return Api().get('volunteer/'+id)
+    },
+    AddGroup(id, data) {
+        return Api().put('volunteer/'+id+'/addgroup',
+        qs.stringify({
+            volunteergroubId: data.volunteergroubId
+        }))
+    },
+    ShowVolunteerGroup() {
+        return Api().get('volunteergroup')
     }
 }

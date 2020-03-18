@@ -37,8 +37,8 @@ export default {
             links:[
                 {icon: 'dashboard', text:'Dashboard', route: '/'},
                 {icon: 'home', text:"พื้นที่", route: '/area'},
-                {icon: 'people', text: "ผู้สูงอายุ", route: '/elders'},
-                {icon: 'group', text: "อาสาสมัคร", route: '/volunteers'},
+                {icon: 'accessible', text: "ผู้สูงอายุ", route: '/elders'},
+                {icon: 'people', text: "อาสาสมัคร", route: '/volunteers'},
                 {icon: 'email', text:"About", route:'/about'}
             ]
         }
