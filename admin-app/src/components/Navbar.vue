@@ -7,7 +7,7 @@
             <span>System</span>
         </v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-btn text color="grey">
+        <v-btn text color="grey" v-on:click="logout">
             <span>Sign Out</span>
             <v-icon>exit_to_app</v-icon>
         </v-btn>
@@ -33,15 +33,23 @@
 export default {
     data() {
         return {
-            drawer: false,
+            drawer: true,
             links:[
-                {icon: 'dashboard', text:'Dashboard', route: '/'},
+                {icon: 'dashboard', text:'Dashboard', route: '/dashboard'},
                 {icon: 'home', text:"พื้นที่", route: '/area'},
                 {icon: 'accessible', text: "ผู้สูงอายุ", route: '/elders'},
                 {icon: 'people', text: "อาสาสมัคร", route: '/volunteers'},
                 {icon: 'email', text:"About", route:'/about'}
             ]
         }
+    },
+    methods:{
+        logout() {
+        this.$store.dispatch('setToken', null)
+        this.$router.push({
+            name: 'login'
+        })
+    }
     }
     
 }

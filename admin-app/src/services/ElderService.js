@@ -2,8 +2,11 @@ import Api from './Api'
 var qs = require('querystring') // server ไม่ได้ีับเป็น json เลยต้องช้อันนี้
 
 export default {
+    AddfileElder(formData) {
+        return Api().post('admin/uploadfile', formData)
+    },
     CreateElder(data) {
-        return Api().post('elder', 
+        return Api().post('admin/elder', 
         qs.stringify({
             indentid: data.indentid,
             fname: data.fname,
@@ -14,10 +17,10 @@ export default {
         }))
     },
     ShowAllElder (){
-        return Api().get('elder')
+        return Api().get('admin/elder')
     },
     ShowElderById (elderId){
-        return Api().get('elder/'+elderId)
+        return Api().get('admin/elder/'+elderId)
     },
     CreateGroupElder() {
         return Api().post('eldergroup')

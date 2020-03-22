@@ -2,8 +2,11 @@ import Api from './Api'
 var qs = require('querystring') // server ไม่ได้ีับเป็น json เลยต้องช้อันนี้
 
 export default {
+    ShowVolunteerByElderId(id) {
+        return Api().get('admin/v/'+id)
+    },
     ShowAllVolunteers() {
-        return Api().get('volunteer')
+        return Api().get('admin/volunteer')
     },
     CreateVolunteer(data) {
         return Api().post('volunteer', 
@@ -17,7 +20,7 @@ export default {
         }))
     },
     ShowVolunteerById(id) {
-        return Api().get('volunteer/'+id)
+        return Api().get('admin/volunteer/'+id)
     },
     AddGroup(id, data) {
         return Api().put('volunteer/'+id+'/addgroup',

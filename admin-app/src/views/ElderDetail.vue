@@ -1,4 +1,7 @@
 <template>
+<div>
+  <Navbar/>
+  <v-content class="mx-4 mb-4">
   <div>
       <v-container>
         <v-row>
@@ -20,11 +23,11 @@
               <v-card-actions>
                 <v-btn color="success" @click.stop="dialog = true">
                   <v-icon>mdi-pencil</v-icon>
-                  <span>แก้ไขข้อมูล</span>
+                  <span>เพิ่มกลุ่มผู้สูงอายุ</span>
                 </v-btn>
                 <v-dialog v-model="dialog" max-width="500">
                     <v-card>
-                      <v-card-title>แก้ไขข้อมูลส่วนตัว</v-card-title>
+                      <v-card-title>เพิ่มกลุ่มผู้สูงอายุ</v-card-title>
                       <v-card-text>
                         <v-container>
                           <v-row>
@@ -41,7 +44,6 @@
                       </v-card-text>
                     </v-card>
                 </v-dialog>
-                <v-btn color="primary">อาสาสมัครที่รับผิดชอบ</v-btn>
               </v-card-actions>
             </v-card>
           </v-col>
@@ -49,30 +51,50 @@
             <v-card class="mx-auto" max-width="500">
               <v-card-text>
                 <div>รายชื่ออาสาสมัครที่รับผิดชอบ</div>
+                <v-container>
+                  <v-data-table
+                :headers="headers"
+                :items="volunteers"
+                :items-per-page="5"
+                class="elevation-1"
+              ></v-data-table>
+                </v-container>
               </v-card-text>
             </v-card>
           </v-col>
         </v-row>
       </v-container>
   </div>
+  </v-content>
+  </div>
 </template>
 
 <script>
 import ElderService from '../services/ElderService';
+import VolunteerService from '../services/VolunteerService';
 
 export default {
   data() {
     return {
+      volunteers:[],
       elder: [],
       dialog: false,
       editElder: {
         eldergroubId: "",
-      }
+      },
+      headers: [
+        { text: "ชื่อ", align: "start", sortable: false, value: "fname" },
+        { text: "นามสกุล", align: "start", sortable: false, value: "lname" },
+        { text: "เบอร์โทร", align: "start", sortable: false, value: "tel" }
+        
+        
+      ]
     }
   },
   async created() {
     let elderId = this.$route.params.elderId;
     this.elder = (await ElderService.ShowElderById(elderId)).data;
+    this.volunteers = (await VolunteerService.ShowVolunteerByElderId(elderId)).data;
   },
   methods: {
     navigateTo(route) {

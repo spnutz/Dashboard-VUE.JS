@@ -1,23 +1,39 @@
 <template>
-  <div class="Elder">
-    <v-container>
-      <v-row></v-row>
-      <v-row>
-        <v-col>
-          <v-data-table :headers="headers" :items="elders" :items-per-page="5" class="elevation-1" item-key="id"> 
-            <template v-slot:top>
-              <v-toolbar flat color="white">
-                <v-toolbar-title>รายชื่อผู้สูงอายุ</v-toolbar-title>
-              </v-toolbar>
-            </template>
-            <template v-slot:item.actions="{item}">
-              <v-btn depressed small v-on:click="navigateTo('/elder/'+item.id)"  color="green" class="white--text">เพิ่มเติม</v-btn>
-            </template>
-            
-          </v-data-table>
-        </v-col>
-      </v-row>
-    </v-container>
+  <div>
+    <Navbar />
+    <v-content class="mx-4 mb-4">
+      <div class="Elder">
+        <v-container>
+          <v-row></v-row>
+          <v-row>
+            <v-col>
+              <v-data-table
+                :headers="headers"
+                :items="elders"
+                :items-per-page="5"
+                class="elevation-1"
+                item-key="id"
+              >
+                <template v-slot:top>
+                  <v-toolbar flat color="white">
+                    <v-toolbar-title>รายชื่อผู้สูงอายุ</v-toolbar-title>
+                  </v-toolbar>
+                </template>
+                <template v-slot:item.actions="{item}">
+                  <v-btn
+                    depressed
+                    small
+                    v-on:click="navigateTo('/elder/'+item.id)"
+                    color="green"
+                    class="white--text"
+                  >เพิ่มเติม</v-btn>
+                </template>
+              </v-data-table>
+            </v-col>
+          </v-row>
+        </v-container>
+      </div>
+    </v-content>
   </div>
 </template>
 
@@ -43,7 +59,7 @@ export default {
           value: "id"
         },
         { text: "สถานะ", align: "start", sortable: false, value: "status" },
-        { text: 'actions', value: 'actions', sortable: false }
+        { text: "actions", value: "actions", sortable: false }
       ],
       elders: [],
       selected: []
@@ -59,8 +75,7 @@ export default {
   methods: {
     navigateTo(route) {
       this.$router.push(route);
-    }   
-  },
- 
+    }
+  }
 };
 </script>

@@ -1,4 +1,7 @@
 <template>
+<div>
+  <Navbar/>
+  <v-content class="mx-4 mb-4">
   <div class="areas">
     <v-container>
       <v-row>
@@ -52,6 +55,8 @@
         </v-col>
       </v-row>
     </v-container>
+  </div>
+  </v-content>
   </div>
 </template>
 

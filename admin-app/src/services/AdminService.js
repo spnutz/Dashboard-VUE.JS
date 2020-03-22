@@ -8,5 +8,12 @@ export default {
             username: data.username,
             password: data.password
         }))
+    },
+    signup(data) {
+        return Api().post('/admin/signup',
+        qs.stringify({
+            username: data.username,
+            password: data.password
+        }))
     }
 }

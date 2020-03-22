@@ -3,7 +3,7 @@ var qs = require('querystring') // server ไม่ได้ีับเป็�
 
 export default {
     CreateArea(data) {
-        return Api().post('area',
+        return Api().post('admin/area',
         qs.stringify({
             areaname: data.areaname,
             province: data.province,
@@ -11,7 +11,7 @@ export default {
         }))
     },
     ShowAllArea() {
-        return Api().get('area')
+        return Api().get('admin/area')
     },
     ShowAreaById(id) {
         return Api().get('area/'+id)
@@ -20,7 +20,7 @@ export default {
         return Api().get('area/'+id+'/village')
     },
     CreateVillage(data, id) {
-        return Api().post('area/'+id+'/village', 
+        return Api().post('admin/area/'+id+'/village', 
         qs.stringify({name: data.name}))
     },
     ShowElderinVillage(areaId, villageId) {
