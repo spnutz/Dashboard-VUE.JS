@@ -28,7 +28,7 @@ export default {
             volunteergroubId: data.volunteergroubId
         }))
     },
-    ShowVolunteerGroup() {
-        return Api().get('volunteergroup')
+    ShowVolunteerGroup(vilId) {
+        return Api().get('admin/village/'+vilId+'/volunteergroup')
     }
 }

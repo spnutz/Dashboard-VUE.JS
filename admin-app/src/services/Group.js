@@ -1,10 +1,10 @@
 import Api from './Api'
 
 export default {
-    CreateGroupElder() {
-        return Api().post('eldergroup')
+    CreateGroupElder(vilId) {
+        return Api().post('/admin/village/'+vilId+'/eldergroup')
     },
-    CreateGroupVolunteer() {
-        return Api().post('volunteergroup')
+    CreateGroupVolunteer(vilId) {
+        return Api().post('/admin/village/'+vilId+'/volunteergroup')
     }
 }

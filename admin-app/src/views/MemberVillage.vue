@@ -307,8 +307,8 @@ export default {
         await AreaService.ShowVolunteerinVillage(areaId, villId)
       ).data;
       this.elders = (await AreaService.ShowElderinVillage(areaId, villId)).data;
-      this.elderGroup = (await ElderService.ShowGroupElder()).data;
-      this.volunteerGroup = (await VolunteerService.ShowVolunteerGroup()).data;
+      this.elderGroup = (await ElderService.ShowGroupElder(villId)).data;
+      this.volunteerGroup = (await VolunteerService.ShowVolunteerGroup(villId)).data;
     } catch (err) {
       console.log(err);
     }
@@ -337,7 +337,8 @@ export default {
     },
     async CreateGroupElder() {
       try {
-        await GroupService.CreateGroupElder();
+        let villId = this.$route.params.villId;
+        await GroupService.CreateGroupElder(villId);
         window.location.reload();
       } catch (err) {
         console.log(err);
@@ -345,7 +346,8 @@ export default {
     },
     async CreateGroupVolunteer() {
       try {
-        await GroupService.CreateGroupVolunteer();
+        let villId = this.$route.params.villId;
+        await GroupService.CreateGroupVolunteer(villId);
         window.location.reload();
       } catch (err) {
         console.log(err);

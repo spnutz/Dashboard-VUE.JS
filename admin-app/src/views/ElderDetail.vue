@@ -19,6 +19,7 @@
                 <p>เบอร์โทร : {{elder[0].tel}}</p>
                 <p>เพศ : {{elder[0].gender}}</p>
                 <p>กลุ่มผู้สูงอายุที่ {{elder[0].eldergroubId}}</p>
+                
               </v-card-text>
               <v-card-actions>
                 <v-btn color="success" @click.stop="dialog = true">
@@ -34,6 +35,7 @@
                             <v-col cols="12">
                               <form v-on:submit.prevent="addGroup">
                                 <v-text-field v-model="editElder.eldergroubId" label="กลุ่มผู้สูงอายุ"></v-text-field>
+                                
                               <center>
                                 <v-btn color="success" class="mr-4" type="submit">submit</v-btn>
                               </center>
@@ -80,14 +82,12 @@ export default {
       elder: [],
       dialog: false,
       editElder: {
-        eldergroubId: "",
+        eldergroubId: [],
       },
       headers: [
         { text: "ชื่อ", align: "start", sortable: false, value: "fname" },
         { text: "นามสกุล", align: "start", sortable: false, value: "lname" },
         { text: "เบอร์โทร", align: "start", sortable: false, value: "tel" }
-        
-        
       ]
     }
   },
@@ -95,6 +95,8 @@ export default {
     let elderId = this.$route.params.elderId;
     this.elder = (await ElderService.ShowElderById(elderId)).data;
     this.volunteers = (await VolunteerService.ShowVolunteerByElderId(elderId)).data;
+
+    console.log(this.Egroup)
   },
   methods: {
     navigateTo(route) {

@@ -25,13 +25,16 @@ export default {
     CreateGroupElder() {
         return Api().post('eldergroup')
     },
-    ShowGroupElder() {
-        return Api().get('eldergroup')
+    ShowGroupElder(vilId) {
+        return Api().get('admin/village/'+vilId+'/eldergroup')
     },
     AddElderGroup(elderId, data) {
         return Api().put('elder/'+elderId+'/addgroup',
         qs.stringify({
             eldergroubId: data.eldergroubId
         }))
+    },
+    CallVillageId(id) {
+        return Api().get('admin/elder/'+id+'/vilid')
     }
 }
